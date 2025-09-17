@@ -48,7 +48,7 @@ function loadListsFromJSON(jsonFilePath) {
 function launch() {
   // IF NO DATA IS IN LOCAL STORAGE THEN LOAD ALL THE TEST
   // DATA FROM THE JSON FILE AND PUT IT THERE
-  createRoot(document.getElementById('root')).render(
+  createRoot(document.querySelector("body")).render(
     <StrictMode>
       <App />
     </StrictMode>
