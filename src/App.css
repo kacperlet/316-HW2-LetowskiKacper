@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
 :root {
   /* 
         FIRST WE'LL DEFINE OUR SWATCHES, i.e. THE COMPLEMENTARY
@@ -23,7 +25,7 @@ body {
 
 #root {
   background-color: var(--swatch-primary);
-  font-family: serif;
+  font-family: "Lato", serif;
   position: absolute;
   width: 80%;
   left: 10%;
@@ -51,7 +53,7 @@ body {
   background-image: linear-gradient(to bottom,         
   #b8b808, #636723);
   color: white;
-  font-size: 54pt;
+  font-size: 40pt;
   border-color: black;
   border-width: 2px;
   border-style: solid;
