@@ -220,8 +220,8 @@ input:hover {
 
 .modal-root {
   position: relative;
-  max-width: 1200vw;
-  max-height: 600vh;
+  max-width: 88vw;
+  max-height: 100vh;
   overflow: visible;
   display: flex;
   flex-direction: column;
@@ -238,7 +238,7 @@ input:hover {
 }
 
 .modal-north {
-  font-size:32pt;
+  font-size:30pt;
   font-weight: bold;
   background-color: #669966;
   color:white;
@@ -249,7 +249,7 @@ input:hover {
   grid-template-columns: 30% 65%;
   grid-template-rows: 33% 33% 33%;
   gap: 10px 20px;
-  font-size: 48pt;
+  font-size: 24pt;
 }
 
 span {
