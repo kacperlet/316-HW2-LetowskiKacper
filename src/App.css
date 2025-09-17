@@ -131,8 +131,9 @@ body {
 }
 
 .card-button, .card-button-disabled {
-  font-size:18pt;
-  border-width: 0px;
+  font-size:24pt;
+  border-width: 1px;
+  border-radius: 5px;
   float:right;
   color: black;
   cursor: pointer;
