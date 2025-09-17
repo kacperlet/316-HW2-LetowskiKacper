@@ -10,6 +10,10 @@
   --swatch-contrast: #111111; 
   --swatch-accent: #669966; 
   --swatch-status: #123456;
+  --swatch-link-emphasis: #b88320;
+  --swatch-link-contrast:lightgreen;
+  --swatch-link-hover:pink;
+  --switch-link-active: magenta;
   --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
 }
 
@@ -152,12 +156,39 @@ body {
 .song-card, .song-card-dragged-to { 
   display:flex;
   align-items: center;
-  font-size: 24pt;
+  justify-content: space-between;
+  font-size: 20pt;
   height:20%;
+  background-color: var(--swatch-complement);
+  margin: 10px;
+  padding: 15px;
+  border-radius: 125px;
+}
+
+.song-card:hover {
+  background-color: var(--swatch-contrast);
+  color: white;
+}
+
+.song-card-title {
+  color: var(--swatch-link-emphasis);
+}
+
+.song-card-title:hover {
+  color: var(--swatch-link-hover);
+  cursor: pointer;
+}
+
+.song-card-artist {
+  color: red;
 }
 
 input {
   font-size:20pt;
+}
+
+input:hover {
+  cursor: pointer;
 }
 
 
