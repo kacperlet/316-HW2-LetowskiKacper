@@ -7,6 +7,7 @@ import { jsTPS } from 'jstps';
 
 // OUR TRANSACTIONS
 import MoveSong_Transaction from './transactions/MoveSong_Transaction.js';
+import EditSong_Transaction from './transactions/EditSong_Transaction.js';
 
 // THESE REACT COMPONENTS ARE MODALS
 import DeleteListModal from './components/DeleteListModal.jsx';
@@ -18,6 +19,7 @@ import SidebarHeading from './components/SidebarHeading.jsx';
 import SidebarList from './components/PlaylistCards.jsx';
 import SongCards from './components/SongCards.jsx';
 import Statusbar from './components/Statusbar.jsx';
+import EditSongModal from './components/EditSongModal.jsx';
 
 class App extends React.Component {
     constructor(props) {
@@ -35,6 +37,8 @@ class App extends React.Component {
         // SETUP THE INITIAL STATE
         this.state = {
             listKeyPairMarkedForDeletion : null,
+            selectedSongIndex : null,
+            selectedSong : null,
             currentList : null,
             sessionData : loadedSessionData
         }
@@ -235,6 +239,47 @@ class App extends React.Component {
         let transaction = new MoveSong_Transaction(this, start, end);
         this.tps.processTransaction(transaction);
     }
+
+    editSong(index, title, artist, year, url) {
+        let list = this.state.currentList;
+        let song = list.songs[index];
+        
+        song.title = title;
+        song.artist = artist;
+        song.year = year;
+        song.youTubeId = url;
+    
+        this.setStateWithUpdatedList(list);
+    }
+
+    addEditSongTransaction = (index, title, artist, year, url) => {
+        let transaction = new EditSong_Transaction(this, index, title, artist, year, url);
+        this.tps.processTransaction(transaction);
+    }
+
+    markSongForEditing = (songIndex, song) => {
+        console.log("Song at index " + songIndex + " ready to be updated.");
+        this.setState(prevState => ({
+            currentList: prevState.currentList,
+            selectedSongIndex: songIndex,
+            selectedSong: song,
+            listKeyPairMarkedForDeletion : prevState.listKeyPairMarkedForDeletion,
+            sessionData: prevState.sessionData
+        }), () => {
+            // PROMPT THE USER
+            this.showEditSongModal();
+        });
+    }
+
+    showEditSongModal() {
+        let modal = document.getElementById("edit-song-modal");
+        modal.classList.add("is-visible");
+    }
+    hideEditSongModal() {
+        let modal = document.getElementById("edit-song-modal");
+        modal.classList.remove("is-visible");
+    }
+
     // THIS FUNCTION BEGINS THE PROCESS OF PERFORMING AN UNDO
     undo = () => {
         if (this.tps.hasTransactionToUndo()) {
@@ -303,13 +348,21 @@ class App extends React.Component {
                 />
                 <SongCards
                     currentList={this.state.currentList}
-                    moveSongCallback={this.addMoveSongTransaction} />
+                    moveSongCallback={this.addMoveSongTransaction} 
+                    markSongForEditingCallback={this.markSongForEditing}
+                />
                 <Statusbar 
                     currentList={this.state.currentList} />
                 <DeleteListModal
                     listKeyPair={this.state.listKeyPairMarkedForDeletion}
                     hideDeleteListModalCallback={this.hideDeleteListModal}
                     deleteListCallback={this.deleteMarkedList}
+                />
+                <EditSongModal
+                    songIndex={this.state.selectedSongIndex}
+                    song={this.state.selectedSong}
+                    editSongCallback={this.addEditSongTransaction}
+                    hideEditSongModalCallback={this.hideEditSongModal}
                 />
             </div>
         );

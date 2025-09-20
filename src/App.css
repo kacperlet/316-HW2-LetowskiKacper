@@ -238,7 +238,7 @@ input:hover {
 }
 
 .modal-north {
-  font-size:30pt;
+  font-size:28pt;
   font-weight: bold;
   background-color: #669966;
   color:white;
@@ -247,7 +247,7 @@ input:hover {
 .modal-center {
   display: grid;
   grid-template-columns: 30% 65%;
-  grid-template-rows: 33% 33% 33%;
+  grid-template-rows: 25% 25% 25% 25%;
   gap: 10px 20px;
   font-size: 24pt;
 }
@@ -271,12 +271,12 @@ span {
 }
 
 .modal-prompt {  
-  font-size:28pt;
+  font-size:24pt;
   font-weight: bold;
 }
 
 .modal-textfield {
-  font-size:28pt;
+  font-size:24pt;
 }
 
 .modal-button {

@@ -4,6 +4,7 @@ import React from "react";
 export default class SongCards extends React.Component {
     render() {
         const { currentList, 
+                markSongForEditingCallback,
                 moveSongCallback } = this.props;
         if (currentList === null) {
             return (
@@ -18,8 +19,10 @@ export default class SongCards extends React.Component {
                             <SongCard
                                 id={'song-card-' + (index+1)}
                                 key={'song-card-' + (index+1)}
+                                index={index}
                                 song={song}
                                 moveCallback={moveSongCallback}
+                                markSongForEditingCallback={markSongForEditingCallback}
                             />
                         ))
                     }

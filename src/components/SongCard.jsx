@@ -54,6 +54,12 @@ export default class SongCard extends React.Component {
         this.props.moveCallback(sourceId, targetId);
     }
 
+    handleDoubleClick = (event) => {
+        event.preventDefault();
+
+        this.props.markSongForEditingCallback(this.props.index, this.props.song);
+    }
+
     getItemNum = () => {
         return this.props.id.substring("song-card-".length);
     }
@@ -75,6 +81,7 @@ export default class SongCard extends React.Component {
                 onDragEnter={this.handleDragEnter}
                 onDragLeave={this.handleDragLeave}
                 onDrop={this.handleDrop}
+                onDoubleClick={this.handleDoubleClick}
                 draggable="true"
             >
                 <div>
