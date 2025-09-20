@@ -280,6 +280,34 @@ class App extends React.Component {
         modal.classList.remove("is-visible");
     }
 
+    addSong(index, song) {
+        console.log("Adding song at index " + index);
+
+        this.setState(prevState => ({
+            currentList: prevState.currentList.splice(index, 0, song)
+        }));
+
+    }
+
+    addDefaultSong(index) {
+        this.addSong(index, {
+            title: "Untitled",
+            artist: "???",
+            year: 2000,
+            youTubeId: dQw4w9WgXcQ
+        })
+    }
+
+    removeSong(indexDeleted) {
+        console.log("Removing song at index " + indexDeleted);
+
+        this.setState(prevState => ({
+            currentList: prevState.currentList.filter((value, index) => {
+                return (index != indexDeleted);
+            })
+        }));
+    }
+
     // THIS FUNCTION BEGINS THE PROCESS OF PERFORMING AN UNDO
     undo = () => {
         if (this.tps.hasTransactionToUndo()) {
