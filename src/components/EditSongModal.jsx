@@ -49,6 +49,8 @@ export default class EditSongModal extends Component {
     render() {
         const { song } = this.props;
 
+        let confirmButtonDisabled = false;
+
         if (song && !(this.state.changed))
         {
             // INHERIT STATE FROM PROP
@@ -56,6 +58,9 @@ export default class EditSongModal extends Component {
             this.state.artist = song.artist;
             this.state.year = song.year;
             this.state.youTubeId = song.youTubeId;
+
+            // NO CHANGES HAVE BEEN MADE YET
+            confirmButtonDisabled = true;
         }
         
         return (
@@ -102,6 +107,7 @@ export default class EditSongModal extends Component {
                         id="edit-song-confirm-button" 
                         className="modal-button" 
                         value='Confirm' 
+                        disabled={confirmButtonDisabled}
                         onClick={this.handleConfirmButton}
                     />
                     <input 
