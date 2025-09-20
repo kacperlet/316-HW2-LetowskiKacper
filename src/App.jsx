@@ -8,6 +8,7 @@ import { jsTPS } from 'jstps';
 // OUR TRANSACTIONS
 import MoveSong_Transaction from './transactions/MoveSong_Transaction.js';
 import EditSong_Transaction from './transactions/EditSong_Transaction.js';
+import RemoveSong_Transaction from './transactions/RemoveSong_Transaction.js';
 
 // THESE REACT COMPONENTS ARE MODALS
 import DeleteListModal from './components/DeleteListModal.jsx';
@@ -283,10 +284,9 @@ class App extends React.Component {
     addSong(index, song) {
         console.log("Adding song at index " + index);
 
-        this.setState(prevState => ({
-            currentList: prevState.currentList.splice(index, 0, song)
-        }));
-
+        let list = { ...this.state.currentList };
+        list.songs.splice(index, 0, song);
+        this.setStateWithUpdatedList(list);
     }
 
     addDefaultSong(index) {
@@ -301,11 +301,17 @@ class App extends React.Component {
     removeSong(indexDeleted) {
         console.log("Removing song at index " + indexDeleted);
 
-        this.setState(prevState => ({
-            currentList: prevState.currentList.filter((value, index) => {
-                return (index != indexDeleted);
-            })
-        }));
+        let list = { ...this.state.currentList };
+        list.songs = list.songs.filter((_, index) => 
+            index !== indexDeleted    
+        );
+        
+        this.setStateWithUpdatedList(list);
+    }
+
+    addRemoveSongTransaction = (index) => {
+        let transaction = new RemoveSong_Transaction(this, index);
+        this.tps.processTransaction(transaction);
     }
 
     // THIS FUNCTION BEGINS THE PROCESS OF PERFORMING AN UNDO
@@ -378,6 +384,7 @@ class App extends React.Component {
                     currentList={this.state.currentList}
                     moveSongCallback={this.addMoveSongTransaction} 
                     markSongForEditingCallback={this.markSongForEditing}
+                    removeSongCallback={this.addRemoveSongTransaction}
                 />
                 <Statusbar 
                     currentList={this.state.currentList} />
