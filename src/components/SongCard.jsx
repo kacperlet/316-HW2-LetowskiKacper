@@ -66,6 +66,12 @@ export default class SongCard extends React.Component {
         this.props.removeSongCallback(this.props.index);
     }
 
+    handleDuplicateButton = (event) => {
+        event.preventDefault();
+
+        this.props.duplicateSongCallback(this.props.index);
+    }
+
     getItemNum = () => {
         return this.props.id.substring("song-card-".length);
     }
@@ -99,13 +105,23 @@ export default class SongCard extends React.Component {
                     <span className="song-card-by">&nbsp;by&nbsp;</span>
                     <span className="song-card-artist">{song.artist}&nbsp;</span>
                 </div>
-                <input
+                <div>
+                    <input
                     className="song-card-button"
                     type="button"
-                    value="✕"
-                    onClick={this.handleRemoveButton}
-                >
-                </input>
+                    value="⧉"
+                    onClick={this.handleDuplicateButton}
+                    >
+                    </input>
+                    <input
+                        className="song-card-button"
+                        type="button"
+                        value="✕"
+                        onClick={this.handleRemoveButton}
+                    >
+                    </input>
+                </div>
+                
             </div>
         )
     }

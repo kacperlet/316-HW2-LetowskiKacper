@@ -24,6 +24,7 @@ export default class SongCards extends React.Component {
                                 moveCallback={moveSongCallback}
                                 markSongForEditingCallback={markSongForEditingCallback}
                                 removeSongCallback={this.props.removeSongCallback}
+                                duplicateSongCallback={this.props.duplicateSongCallback}
                             />
                         ))
                     }

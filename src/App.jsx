@@ -10,6 +10,7 @@ import MoveSong_Transaction from './transactions/MoveSong_Transaction.js';
 import EditSong_Transaction from './transactions/EditSong_Transaction.js';
 import RemoveSong_Transaction from './transactions/RemoveSong_Transaction.js';
 import AddSong_Transaction from './transactions/AddSong_Transaction.js';
+import DuplicateSong_Transaction from './transactions/DuplicateSong_Transaction.js';
 
 // THESE REACT COMPONENTS ARE MODALS
 import DeleteListModal from './components/DeleteListModal.jsx';
@@ -321,6 +322,11 @@ class App extends React.Component {
         this.tps.processTransaction(transaction);
     }
 
+    addDuplicateSongTransaction = (index) => {
+        let transaction = new DuplicateSong_Transaction(this, index);
+        this.tps.processTransaction(transaction);
+    }
+
     // THIS FUNCTION BEGINS THE PROCESS OF PERFORMING AN UNDO
     undo = () => {
         if (this.tps.hasTransactionToUndo()) {
@@ -393,6 +399,7 @@ class App extends React.Component {
                     moveSongCallback={this.addMoveSongTransaction} 
                     markSongForEditingCallback={this.markSongForEditing}
                     removeSongCallback={this.addRemoveSongTransaction}
+                    duplicateSongCallback={this.addDuplicateSongTransaction}
                 />
                 <Statusbar 
                     currentList={this.state.currentList} />
