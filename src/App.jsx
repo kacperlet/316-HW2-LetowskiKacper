@@ -94,6 +94,75 @@ class App extends React.Component {
             this.db.mutationUpdateSessionData(this.state.sessionData);
         });
     }
+
+    /**
+     * Creates a new playlist with pre-set values
+     * @param {String} name 
+     * @param {Song[]} songs 
+     */
+    createList = (name, songs) => {
+        // FIRST FIGURE OUT WHAT THE NEW LIST'S KEY AND NAME WILL BE
+        let newKey = this.state.sessionData.nextKey;
+        let newName = name;
+
+        // MAKE THE NEW LIST
+        let newList = {
+            key: newKey,
+            name: newName,
+            songs: songs
+        };
+
+        // MAKE THE KEY,NAME OBJECT SO WE CAN KEEP IT IN OUR
+        // SESSION DATA SO IT WILL BE IN OUR LIST OF LISTS
+        let newKeyNamePair = { "key": newKey, "name": newName };
+        let updatedPairs = [...this.state.sessionData.keyNamePairs, newKeyNamePair];
+        this.sortKeyNamePairsByName(updatedPairs);
+
+        // CHANGE THE APP STATE SO THAT THE CURRENT LIST IS
+        // THIS NEW LIST AND UPDATE THE SESSION DATA SO THAT THE
+        // NEXT LIST CAN BE MADE AS WELL. NOTE, THIS setState WILL
+        // FORCE A CALL TO render, BUT THIS UPDATE IS ASYNCHRONOUS,
+        // SO ANY AFTER EFFECTS THAT NEED TO USE THIS UPDATED STATE
+        // SHOULD BE DONE VIA ITS CALLBACK
+        this.setState(prevState => ({
+            listKeyPairMarkedForDeletion : prevState.listKeyPairMarkedForDeletion,
+            currentList: newList,
+            sessionData: {
+                nextKey: prevState.sessionData.nextKey + 1,
+                counter: prevState.sessionData.counter + 1,
+                keyNamePairs: updatedPairs
+            }
+        }), () => {
+            // PUTTING THIS NEW LIST IN PERMANENT STORAGE
+            // IS AN AFTER EFFECT
+            this.db.mutationCreateList(newList);
+
+            // SO IS STORING OUR SESSION DATA
+            this.db.mutationUpdateSessionData(this.state.sessionData);
+        });
+    }
+
+    duplicateList = (key) => {
+        let list = this.db.queryGetList(key);
+        
+        let name = list.name + " (copy)";
+        let songs = new Array();
+        for (let i = 0; i < list.songs.length; i++)
+        {
+            let currentSong = list.songs[i];
+            let song = {
+                title: currentSong.title,
+                artist: currentSong.artist,
+                year: currentSong.year,
+                youTubeId: currentSong.youTubeId
+            }
+
+            songs.push(song);
+        }
+
+        this.createList(name, songs);
+    }
+
     // THIS FUNCTION BEGINS THE PROCESS OF DELETING A LIST.
     deleteList = (key) => {
         // IF IT IS THE CURRENT LIST, CHANGE THAT
@@ -383,6 +452,7 @@ class App extends React.Component {
                     deleteListCallback={this.markListForDeletion}
                     loadListCallback={this.loadList}
                     renameListCallback={this.renameList}
+                    duplicateListCallback={this.duplicateList}
                 />
                 <EditToolbar
                     canAddSong={canAddSong}
