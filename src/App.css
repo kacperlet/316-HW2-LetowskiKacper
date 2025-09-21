@@ -391,3 +391,7 @@ span {
     transform: rotate(0deg);
   }
 }
+
+.disabled:hover {
+  cursor: default;
+}
