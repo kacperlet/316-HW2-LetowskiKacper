@@ -64,7 +64,7 @@ body {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   text-align:center;
-  font-size: 36pt;
+  font-size: 26pt;
   font-weight: bold;
   display:flex;
   flex-direction: row;
@@ -183,6 +183,10 @@ body {
 
 .song-card-artist {
   color: red;
+}
+
+.song-card-info {
+  max-width: 80%;
 }
 
 input {
