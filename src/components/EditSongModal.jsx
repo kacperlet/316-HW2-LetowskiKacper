@@ -46,6 +46,21 @@ export default class EditSongModal extends Component {
         this.props.hideEditSongModalCallback();
     }
 
+    handleKeyDown = (event) => {
+        if (event.key === 'Enter')
+        {
+            console.log("Enter Key Pressed");
+
+            document.getElementById("edit-song-confirm-button").click();
+        }
+        else if (event.key === 'Escape')
+        {
+            console.log("Escape Key Pressed");
+
+            document.getElementById("edit-song-cancel-button").click();
+        }
+    }
+
     render() {
         const { song } = this.props;
 
@@ -64,7 +79,7 @@ export default class EditSongModal extends Component {
         }
         
         return (
-            <div id="edit-song-modal" className="modal" data-animation="slideInOutLeft">
+            <div id="edit-song-modal" className="modal" data-animation="slideInOutLeft" onKeyDown={this.handleKeyDown} >
             <div id='edit-song-root' className="modal-root">
                 <div id="edit-song-modal-header" class="modal-north">Edit Song</div>
                 <div id="edit-song-modal-content" class="modal-center">
