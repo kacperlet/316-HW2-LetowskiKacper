@@ -414,6 +414,26 @@ class App extends React.Component {
             this.db.mutationUpdateList(this.state.currentList);
         }
     }
+
+    handleKeyDown = (event) => {
+        if (event.keyCode === 90) // control+Z
+        {
+            console.log("Control + Z Pressed");
+            this.undo();
+        }
+        else if (event.keyCode === 89) // control+y
+        {
+            console.log("Control + Y Pressed");
+            this.redo();
+        }   
+    }
+
+    componentDidMount() {
+        window.addEventListener('keydown', this.handleKeyDown);
+    }
+
+
+
     markListForDeletion = (keyPair) => {
         this.setState(prevState => ({
             currentList: prevState.currentList,
