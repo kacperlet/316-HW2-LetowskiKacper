@@ -40,18 +40,26 @@ export default class SongCard extends React.Component {
     handleDrop = (event) => {
         event.preventDefault();
         let target = event.target;
+        if (target.className != ".song-card")
+        {
+            target = target.closest('.song-card-dragged-to');
+        }
         let targetId = target.id;
-        targetId = targetId.substring(target.id.indexOf("-") + 1);
+        targetId = targetId.substring(target.id.lastIndexOf("-") + 1);
         let sourceId = event.dataTransfer.getData("song");
-        sourceId = sourceId.substring(sourceId.indexOf("-") + 1);
+        sourceId = sourceId.substring(sourceId.lastIndexOf("-") + 1);
+
+        //console.log("Move Target ID: " + targetId)
+        //console.log("Move Source ID: " + sourceId)
         
         this.setState(prevState => ({
             isDragging: false,
             draggedTo: false
         }));
 
-        // ASK THE MODEL TO MOVE THE DATA
-        this.props.moveCallback(sourceId, targetId);
+        // ASK THE MODEL TO MOVE THE DATA IF NEW SPOT
+        if (targetId !== sourceId)
+            this.props.moveCallback(sourceId, targetId);
     }
 
     handleDoubleClick = (event) => {
@@ -79,7 +87,7 @@ export default class SongCard extends React.Component {
     render() {
         const { song } = this.props;
         let num = this.getItemNum();
-        console.log("num: " + num);
+        //console.log("num: " + num);
         let itemClass = "song-card";
         if (this.state.draggedTo) {
             itemClass = "song-card-dragged-to";
