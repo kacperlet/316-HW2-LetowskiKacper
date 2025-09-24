@@ -172,6 +172,7 @@ body {
 }
 
 .song-card-title {
+  text-decoration: none;
   color: var(--swatch-link-emphasis);
 }
 
