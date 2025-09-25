@@ -416,12 +416,12 @@ class App extends React.Component {
     }
 
     handleKeyDown = (event) => {
-        if (event.keyCode === 90) // control+Z
+        if (event.ctrlKey && event.keyCode === 90) // control+Z
         {
             console.log("Control + Z Pressed");
             this.undo();
         }
-        else if (event.keyCode === 89) // control+y
+        else if (event.ctrlKey && event.keyCode === 89) // control+y
         {
             console.log("Control + Y Pressed");
             this.redo();
