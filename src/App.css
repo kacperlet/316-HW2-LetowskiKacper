@@ -251,7 +251,7 @@ input:hover {
 .modal-center {
   display: grid;
   grid-template-columns: 30% 65%;
-  grid-template-rows: 25% 25% 25% 25%;
+  grid-template-rows: 20% 20% 20% 20%;
   gap: 10px 20px;
   font-size: 24pt;
 }

@@ -43,6 +43,7 @@ class App extends React.Component {
             selectedSongIndex : null,
             selectedSong : null,
             currentList : null,
+            modalOpen : false,
             sessionData : loadedSessionData
         }
     }
@@ -343,13 +344,30 @@ class App extends React.Component {
         });
     }
 
-    showEditSongModal() {
+    showEditSongModal = () => {
         let modal = document.getElementById("edit-song-modal");
         modal.classList.add("is-visible");
+
+        this.setState(prevState => ({
+            currentList: prevState.currentList,
+            listKeyPairMarkedForDeletion : prevState.keyPair,
+            sessionData: prevState.sessionData,
+            modalOpen: true
+        }), () => {
+        });
     }
-    hideEditSongModal() {
+    hideEditSongModal = () => {
         let modal = document.getElementById("edit-song-modal");
         modal.classList.remove("is-visible");
+
+        this.setState(prevState => ({
+            currentList: prevState.currentList,
+            listKeyPairMarkedForDeletion : prevState.keyPair,
+            sessionData: prevState.sessionData,
+            modalOpen: false
+        }), () => {
+            
+        });
     }
 
     addSong(index, song) {
@@ -446,20 +464,44 @@ class App extends React.Component {
     }
     // THIS FUNCTION SHOWS THE MODAL FOR PROMPTING THE USER
     // TO SEE IF THEY REALLY WANT TO DELETE THE LIST
-    showDeleteListModal() {
+    showDeleteListModal = () => {
         let modal = document.getElementById("delete-list-modal");
         modal.classList.add("is-visible");
+
+        this.setState(prevState => ({
+            currentList: prevState.currentList,
+            listKeyPairMarkedForDeletion : prevState.keyPair,
+            sessionData: prevState.sessionData,
+            modalOpen: true
+        }), () => {
+        });
     }
     // THIS FUNCTION IS FOR HIDING THE MODAL
-    hideDeleteListModal() {
+    hideDeleteListModal = () => {
         let modal = document.getElementById("delete-list-modal");
         modal.classList.remove("is-visible");
+
+        this.setState(prevState => ({
+            currentList: prevState.currentList,
+            listKeyPairMarkedForDeletion : prevState.keyPair,
+            sessionData: prevState.sessionData,
+            modalOpen: false
+        }), () => {
+        });
     }
     render() {
         let canAddSong = this.state.currentList !== null;
         let canUndo = this.tps.hasTransactionToUndo();
         let canRedo = this.tps.hasTransactionToDo();
         let canClose = this.state.currentList !== null;
+        if (this.state.modalOpen)
+        {
+            canAddSong = false;
+            canUndo = false;
+            canRedo = false;
+            canClose = false;
+        }
+
         return (
             <div id="root">
                 <Banner />
