@@ -348,25 +348,16 @@ class App extends React.Component {
         let modal = document.getElementById("edit-song-modal");
         modal.classList.add("is-visible");
 
-        this.setState(prevState => ({
-            currentList: prevState.currentList,
-            listKeyPairMarkedForDeletion : prevState.keyPair,
-            sessionData: prevState.sessionData,
+        this.setState({
             modalOpen: true
-        }), () => {
         });
     }
     hideEditSongModal = () => {
         let modal = document.getElementById("edit-song-modal");
         modal.classList.remove("is-visible");
 
-        this.setState(prevState => ({
-            currentList: prevState.currentList,
-            listKeyPairMarkedForDeletion : prevState.keyPair,
-            sessionData: prevState.sessionData,
+        this.setState({
             modalOpen: false
-        }), () => {
-            
         });
     }
 
@@ -468,12 +459,8 @@ class App extends React.Component {
         let modal = document.getElementById("delete-list-modal");
         modal.classList.add("is-visible");
 
-        this.setState(prevState => ({
-            currentList: prevState.currentList,
-            listKeyPairMarkedForDeletion : prevState.keyPair,
-            sessionData: prevState.sessionData,
+        this.setState({
             modalOpen: true
-        }), () => {
         });
     }
     // THIS FUNCTION IS FOR HIDING THE MODAL
@@ -481,12 +468,8 @@ class App extends React.Component {
         let modal = document.getElementById("delete-list-modal");
         modal.classList.remove("is-visible");
 
-        this.setState(prevState => ({
-            currentList: prevState.currentList,
-            listKeyPairMarkedForDeletion : prevState.keyPair,
-            sessionData: prevState.sessionData,
+        this.setState({
             modalOpen: false
-        }), () => {
         });
     }
     render() {
